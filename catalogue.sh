@@ -43,7 +43,6 @@ else
    VALIDATE $? "user create roboshop is"
 fi
 
-VALIDATE $? "useradd roboshop is"
 
 mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "directory /app is"
@@ -80,5 +79,13 @@ VALIDATE $? "mongo.repo copy process is"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "mongo installation is"
 
-mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "mongodb copy process"
+INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+
+if [ $INDEX -le 0 ]; then
+    mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "mongodb copy process"
+  else
+    echo "Mongodb products already loaded"
+  fi
+
+  
