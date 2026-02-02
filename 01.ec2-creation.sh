@@ -10,7 +10,7 @@ subnetid="subnet-06a0137ee419d9703"
 
 aws ec2 run-instances --image-id $Amii \
 --instance-type $Instancetype \
-    --subnet-id <subnet-id> \
+    --subnet-id $subnetid \
     --security-group-ids $SGID  \
     --tag-specifications "'ResourceType=instance,Tags=[{Key=Name,Value=$Name}]'"
 
