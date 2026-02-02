@@ -31,17 +31,17 @@ VALIDATE $? "rabbitmq copy prcoess"
 dnf install rabbitmq-server -y &>>$LOG_FILE
 VALIDATE $? "Installing rabbitmq server"
 
-systemctl enable rabbitmq-server
+systemctl enable rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "enable rabbitmq systemctl service"
 
-systemctl start rabbitmq-server
+systemctl start rabbitmq-server &>>$LOG_FILE
 VALIDATE $? "start systemctl rabbitmq service"
 
-id roboshop
+id roboshop &>>&LOG_FILE
 
-if [$? -ne 0]; then
+if [ $? -ne 0 ]; then
     echo "adding user roboshop"
-    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl add_user roboshop roboshop123 &>>$LOG_FILE
     rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
   else
     echo "user roboshop already exists"
