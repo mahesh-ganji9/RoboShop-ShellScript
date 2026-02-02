@@ -37,7 +37,7 @@ aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
       "ResourceRecordSet": {
         "Name": "'$Instance.$HostedZone'",
         "Type": "A",
-        "TTL": "1",
+        "TTL": 1,
         "ResourceRecords": [
           {
             "Value": "'$PrivateIP'"
