@@ -19,6 +19,7 @@ VALIDATE() {
      echo "$2....Failure"
     else
      echo "$2....Success"
+     fi
 }
 
 cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $0.log
