@@ -30,7 +30,7 @@ echo "Print private IP: $PrivateIP"
 aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
   --change-batch '
   {
-  "Comment": "Create a simple A record for ",
+  "Comment": "Create a simple A record",
   "Changes": [
     {
       "Action": "CREATE",
