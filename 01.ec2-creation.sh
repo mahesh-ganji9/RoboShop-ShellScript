@@ -25,13 +25,12 @@ if [ $Instance != 'frontend' ]; then
     --query 'Reservations[*].Instances[*].PrivateIpAddress' \
     --output text)
 
-    echo "Print privateIP Address: $IP"
+    echo "Print privateIP Address $Instance: $IP"
 else
         IP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
         --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-     echo 
-    fi
-     echo "Print Public IPAddress: $IP"
+    echo "Print Public IPAddress $Instance: $IP"
+fi
 aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
   --change-batch '
   {
