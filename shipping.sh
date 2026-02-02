@@ -49,8 +49,10 @@ VALIDATE $? "Curl Command is"
 cd /app &>>$LOG_FILE
 VALIDATE $? "Move to Dir /app is"
 
-rm -rf /app/* 
-VALIDATE $? "Deleting if any file exists"
+rm -rf /app/*
+
+unzip /tmp/shipping.zip
+VALIDATE $? "unzip shipping is"
 
 mvn clean package
 VALIDATE $? "mvn creating .jar file"
