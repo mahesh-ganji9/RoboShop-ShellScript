@@ -6,6 +6,8 @@ AmiId=ami-0220d79f3f480ecf5
 Instancetype="t3.micro"
 SGID="sg-018e4789272ba8904"
 subnetid="subnet-06a0137ee419d9703"
+ZoneId="Z01154241BNSMMPVQO32W"
+HostedZone="daws88s.shop"
 
 for Instance in $@
 do
@@ -24,5 +26,26 @@ PrivateIP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
     --output text)
 
 echo "Print private IP: $PrivateIP"
+
+aws route53 change-resource-record-sets --hosted-zone-id $ZoneId 
+  --change-batch '{
+  "Comment": "Create a simple A record for ",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": '$Instance.$HostedZone',
+        "Type": "A",
+        "TTL": 1,
+        "ResourceRecords": [
+          {
+            "Value": '$PrivateIP'
+          }
+        ]
+      }
+    }
+  ]
+}'
+
 
 done
