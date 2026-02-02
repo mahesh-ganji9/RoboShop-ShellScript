@@ -81,11 +81,11 @@ VALIDATE $? "mongo installation is"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $INDEX -le 1 ]; then
-    mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
+if [ $INDEX -le 0 ]; then
+    mongosh --host $MONGO_HOST </app/db/master-data.js 
     VALIDATE $? "mongodb copy process"
   else
     echo "Mongodb products already loaded"
   fi
 
-  
+systemctl restart catalogue
