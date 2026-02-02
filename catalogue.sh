@@ -6,7 +6,7 @@ Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
 
-mkdir -p $LOG_FOLDER
+
 
 if [ $Userid -ne 0 ]; then
  
@@ -14,6 +14,7 @@ if [ $Userid -ne 0 ]; then
    exit 1
 fi
 
+mkdir -p $LOG_FOLDER
 
 
 VALIDATE() {
