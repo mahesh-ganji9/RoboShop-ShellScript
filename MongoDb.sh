@@ -15,7 +15,7 @@ fi
 mkdir -p $LOG_FOLDER
 
 VALIDATE() {
-    if [$? -ne 0]; then
+    if [ $? -ne 0 ]; then
      
      echo "$2....Failure"
     else
