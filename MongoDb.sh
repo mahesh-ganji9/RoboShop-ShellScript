@@ -8,7 +8,7 @@ LOG_FILE=/var/log/ShellScript/$0.log
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" | tee -a $0.log
+   echo "please run the script with root access: $0" 
    exit 1
 fi
 
@@ -23,20 +23,20 @@ VALIDATE() {
      fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>> "$0.log"
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 VALIDATE $? "mongo.repo copy process is"
 
-dnf install mongodb-org -y &>> "$0.log"
+dnf install mongodb-org -y &>>$LOG_FILE
 VALIDATE $? "mongodb Installation is"
 
-systemctl enable mongod &>> "$0.log"
+systemctl enable mongod &>>$LOG_FILE
 VALIDATE $? "enabling mongodb service is"
 
-systemctl start mongod &>> "$0.log"
+systemctl start mongod &>>$LOG_FILE
 VALIDATE $? "Starting mongodb service is"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> "$0.log"
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOG_FILE
 VALIDATE $? "Replacement of /etc/mongod.conf is"
 
-systemctl restart mongod &>>"$0.log"
+systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "Restarted mongodb service is" 
