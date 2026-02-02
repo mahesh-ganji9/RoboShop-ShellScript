@@ -6,6 +6,7 @@ Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
 DIR=/home/ec2-user/RoboShop-ShellScript
+MONGO_HOST=mongodb.daws88s.shop
 
 mkdir -p $LOG_FOLDER
 
@@ -67,17 +68,17 @@ VALIDATE $? "Copying Catalogue service is"
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "system daemon-reload"
 
-systemctl enable catalogue &>>$LOG_FILE
+systemctl enable Catalogue &>>$LOG_FILE
 VALIDATE $? "enabling Catalogue service is"
 
-systemctl start catalogue &>>$LOG_FILE
+systemctl start Catalogue &>>$LOG_FILE
 VALIDATE $? "Starting Catalogue service is"
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
+cp $DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 VALIDATE $? "mongo.repo copy process is"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "mongo installation is success"
+VALIDATE $? "mongo installation is"
 
-mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js &>>$LOG_FILE
+mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "mongodb copy process"
