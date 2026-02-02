@@ -1,20 +1,20 @@
 #!/bin/bash
 
-#This Script used to created MongoDB instance
-
 Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
 DIR=/home/ec2-user/RoboShop-ShellScript
 MONGO_HOST=mongodb.daws88s.shop
 
-mkdir -p $LOG_FOLDER
+
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" | tee -a $LOG_FILE
+   echo "please run the script with root access: $0" | tee -a $0.log
    exit 1
 fi
+
+mkdir -p $LOG_FOLDER
 
 VALIDATE() {
     if [ $? -ne 0 ]; then
