@@ -12,5 +12,5 @@ aws ec2 run-instances --image-id $Amiid \
 --instance-type $Instancetype \
     --subnet-id $subnetid \
     --security-group-ids $SGID  \
-    --tag-specifications "'ResourceType=instance,Tags=[{Key=Name,Value=$Name}]'"
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Name}]"
 
