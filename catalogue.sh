@@ -79,10 +79,10 @@ VALIDATE $? "mongo.repo copy process is"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "mongo installation is"
 
-INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+INDEX=$(mongosh --host $MONGO_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js 
+    mongosh --host $MONGO_HOST </app/db/master-data.js 
     VALIDATE $? "mongodb copy process"
   else
     echo "Mongodb products already loaded"
