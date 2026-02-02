@@ -25,11 +25,11 @@ if [ $Instance != 'frontend' ]; then
     --query 'Reservations[*].Instances[*].PrivateIpAddress' \
     --output text)
 
-    echo "Print privateIP Address $Instance: $IP"
+    echo "Print privateIP Address for ec2 instance  $Instance: $IP"
 else
         IP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
         --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-    echo "Print Public IPAddress $Instance: $IP"
+    echo "Print Public IPAddress for ec2 instance $Instance: $IP"
 fi
 aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
   --change-batch '
@@ -51,5 +51,7 @@ aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
     }
   ]
 }'
+
+echo "$Instance dns record is $Instance.$HostedZone"
 
 done
