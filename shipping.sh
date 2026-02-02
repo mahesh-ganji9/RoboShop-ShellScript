@@ -51,13 +51,13 @@ VALIDATE $? "Move to Dir /app is"
 
 rm -rf /app/*
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "unzip shipping is"
 
-mvn clean package
+mvn clean package &>>$LOG_FILE
 VALIDATE $? "mvn creating .jar file"
 
-mv target/shipping-1.0.jar shipping.jar 
+mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
 VALIDATE $? "renaming .jar file"
 
 cp $DIR/shipping.service /etc/systemd/system/ &>>$LOG_FILE
@@ -78,9 +78,9 @@ VALIDATE $? "Installing mysql"
 mysql -h $MYSQL_HOST -uroot -pRoboShop@1 -e 'use cities'
 if [ $? -ne 0 ]; then
 
-    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOGS_FILE
-    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOGS_FILE
-    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOGS_FILE
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/schema.sql 
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/app-user.sql 
+    mysql -h $MYSQL_HOST -uroot -pRoboShop@1 < /app/db/master-data.sql
     VALIDATE $? "Loaded data into MySQL"
   else
     echo "mysql db is already loaded"
