@@ -9,6 +9,7 @@ LOG_FILE=/var/log/ShellScript/$0.log
 if [ $Userid -ne 0 ]; then
  
    echo "please run the script with root access: $0" | tee -a $0.log
+   exit 1
 fi
 
 mkdir -p $LOG_FOLDER
