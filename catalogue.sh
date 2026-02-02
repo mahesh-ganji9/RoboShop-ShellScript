@@ -14,9 +14,6 @@ if [ $Userid -ne 0 ]; then
    exit 1
 fi
 
-
-
-
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
@@ -36,16 +33,16 @@ dnf install nodejs -y &&>>$LOG_FILE
 VALIDATE $? "Nodejs Installation Verison is"
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-Validate $? "useradd roboshop is"
+VALIDATE $? "useradd roboshop is"
 
 mkdir -p /app &&>>$LOG_FILE
-Validate $? "directory /app is"
+VALIDATE $? "directory /app is"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &&>>$LOG_FILE
-Validate $? "Curl Command is"
+VALIDATE $? "Curl Command is"
 
 cd /app &&>>$LOG_FILE
-Validate $? "Move to Dir /app is"
+VALIDATE $? "Move to Dir /app is"
 
 unzip /tmp/catalogue.zip &&>>$LOG_FILE
 VALIDATE $? "unzip is"
