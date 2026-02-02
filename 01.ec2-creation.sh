@@ -18,15 +18,20 @@ Instance_ID=$(aws ec2 run-instances --image-id $AmiId \
               --security-group-ids $SGID  \
               --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]" \
               --query 'Instances[0].InstanceId' --output text)
-
 echo "Provide the InstanceID: $Instance_ID"
-
-PrivateIP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
+if [$Instance -ne 'frontend']; then
+    
+    IP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
     --query 'Reservations[*].Instances[*].PrivateIpAddress' \
     --output text)
 
-echo "Print private IP: $PrivateIP"
-
+    echo "Print privateIP Address: $IP"
+else
+     IP=$(aws ec2 describe-instances --instance-ids $Instance_ID 
+     --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+     echo 
+    fi
+     echo "Print Public IPAddress: $IP"
 aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
   --change-batch '
   {
@@ -40,13 +45,12 @@ aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
         "TTL": '1',
         "ResourceRecords": [
           {
-            "Value": "'$PrivateIP'"
+            "Value": "'$IP'"
           }
         ]
       }
     }
   ]
 }'
-
 
 done
