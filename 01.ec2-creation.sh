@@ -28,7 +28,7 @@ PrivateIP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
 echo "Print private IP: $PrivateIP"
 
 aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
-  --change-batch '{
+  --change-batch "{
   "Comment": "Create a simple A record for ",
   "Changes": [
     {
@@ -45,7 +45,7 @@ aws route53 change-resource-record-sets --hosted-zone-id $ZoneId \
       }
     }
   ]
-}'
+}"
 
 
 done
