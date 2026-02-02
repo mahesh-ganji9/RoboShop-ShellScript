@@ -19,7 +19,7 @@ Instance_ID=$(aws ec2 run-instances --image-id $AmiId \
               --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$Instance}]" \
               --query 'Instances[0].InstanceId' --output text)
 echo "Provide the InstanceID: $Instance_ID"
-if [ $Instance -ne 'frontend' ]; then
+if [ $Instance -ne frontend ]; then
     
     IP=$(aws ec2 describe-instances --instance-ids $Instance_ID \
     --query 'Reservations[*].Instances[*].PrivateIpAddress' \
