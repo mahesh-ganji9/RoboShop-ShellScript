@@ -23,20 +23,20 @@ VALIDATE() {
      fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>> $0.log
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>> "$0.log"
 VALIDATE $? "mongo.repo copy process is"
 
-dnf install mongodb-org -y &>> $0.log
+dnf install mongodb-org -y &>> "$0.log"
 VALIDATE $? "mongodb Installation is"
 
-systemctl enable mongod &>> $0.log
+systemctl enable mongod &>> "$0.log"
 VALIDATE $? "enabling mongodb service is"
 
-systemctl start mongod &>> $0.log
+systemctl start mongod &>> "$0.log"
 VALIDATE $? "Starting mongodb service is"
 
-sed 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> $0.log
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>> "$0.log"
 VALIDATE $? "Replacement of /etc/mongod.conf is"
 
-systemctl restart mongod &>> $0.log
+systemctl restart mongod &>>"$0.log"
 VALIDATE $? "Restarted mongodb service is" 
