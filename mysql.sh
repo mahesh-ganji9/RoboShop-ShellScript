@@ -25,14 +25,25 @@ VALIDATE() {
      fi
 }
 
-dnf install mysql-server -y &>>$LOG_FILE
-VALIDATE $? "Installing Mysql server"
+cp $DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+VALIDATE $? "rabbitmq copy prcoess"
 
-systemctl enable mysqld
-VALIDATE $? "enable mysql systemctl service"
+dnf install rabbitmq-server -y &>>$LOG_FILE
+VALIDATE $? "Installing rabbitmq server"
 
-systemctl start mysqld  
-VALIDATE $? "start systemctl mysql service"
+systemctl enable rabbitmq-server
+VALIDATE $? "enable rabbitmq systemctl service"
 
-mysql_secure_installation --set-root-pass RoboShop@1
-VALIDATE $? "Set mysql root pass"
+systemctl start rabbitmq-server
+VALIDATE $? "start systemctl rabbitmq service"
+
+id roboshop
+
+if [$? -ne 0]; then
+    echo "adding user roboshop"
+    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+  else
+    echo "user roboshop already exists
+fi
+    
