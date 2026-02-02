@@ -47,7 +47,7 @@ fi
 mkdir -p /app &>>$LOG_FILE
 VALIDATE $? "directory /app is"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &&>>$LOG_FILE
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &&>>$LOG_FILE
 VALIDATE $? "Curl Command is"
 
 cd /app &>>$LOG_FILE
@@ -81,7 +81,7 @@ VALIDATE $? "mongo installation is"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet  --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $INDEX -le 0 ]; then
+if [ $INDEX -le 1 ]; then
     mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "mongodb copy process"
   else
