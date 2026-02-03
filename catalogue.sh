@@ -9,6 +9,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 B="\e[34m"
+N="\e[0m"
 
 
 if [ $Userid -ne 0 ]; then
@@ -22,9 +23,9 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo -e" $R $2....Failure"
+     echo -e "$2....$R Failure $N"
     else
-     echo -e "$G $2....Success"
+     echo -e "$2....$G Success $N"
      fi
 }
 
