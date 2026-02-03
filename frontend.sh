@@ -4,10 +4,15 @@ Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
 DIR=/home/ec2-user/RoboShop-ShellScript
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+B="\e[34m"
+N="\e[0m"
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" | tee -a $0.log
+   echo "please run the script with root access: $0" 
    exit 1
 fi
 
@@ -16,21 +21,24 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$2....Failure"
+     echo -e "$2....$R Failure $N"
     else
-     echo "$2....Success"
+     echo -e "$2....$G Success $N"
      fi
 }
 
 dnf module disable nginx -y &>>$LOG_FILE
 VALIDATE $? "Disabled nginx is" 
+
 dnf module enable nginx:1.24 -y &>>$LOG_FILE
 VALIDATE $? "Module Enabilng nginx is"
+
 dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing nginx is"
 
 systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "enabling service nginx is"
+
 systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "starting nginx is"
 
