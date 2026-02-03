@@ -3,14 +3,17 @@
 Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
-DIR=/home/ec2-user/RoboShop-ShellScript
+DIR=$PWD
 MONGO_HOST=mongodb.daws88s.shop
-
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+B="\e[34m"
 
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" | tee -a $0.log
+   echo -e "$Y please run the script with root access: $0" 
    exit 1
 fi
 
@@ -19,9 +22,9 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$2....Failure"
+     echo -e" $R $2....Failure"
     else
-     echo "$2....Success"
+     echo -r "$G $2....Success"
      fi
 }
 
@@ -85,7 +88,7 @@ if [ $INDEX -le 0 ]; then
     mongosh --host $MONGO_HOST </app/db/master-data.js 
     VALIDATE $? "mongodb copy process"
   else
-    echo "Mongodb products already loaded"
+    echo -e "$Y Mongodb products already loaded"
   fi
 
 systemctl restart Catalogue
