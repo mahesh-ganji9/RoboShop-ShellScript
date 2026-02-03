@@ -56,7 +56,7 @@ rm -rf /app/*
 unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "unzip payment is"
 
-pip3 install -r requirements.txt $>>$LOG_FILE
+pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? "install dependencies and libraries"
 
 cp $DIR/payment.service /etc/systemd/system/ &>>$LOG_FILE
