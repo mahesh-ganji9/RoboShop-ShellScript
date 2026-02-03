@@ -11,10 +11,9 @@ Y="\e[33m"
 B="\e[34m"
 
 
-
 if [ $Userid -ne 0 ]; then
  
-   echo -e "$Y please run the script with root access: $0" | tee -a $LOG_FILE
+   echo -e "$Y please run the script with root access: $0"
    exit 1
 fi
 
