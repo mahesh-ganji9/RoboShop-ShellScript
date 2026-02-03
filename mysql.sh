@@ -3,11 +3,16 @@
 Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
-DIR=/home/ec2-user/RoboShop-ShellScript
+DIR=$PWD
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+B="\e[34m"
+N="\e[0m"
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" | tee -a $0.log
+   echo -e "$Y please run the script with root access: $0" 
    exit 1
 fi
 
@@ -16,9 +21,9 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$2....Failure"
+     echo -e "$2....$R Failure $N"
     else
-     echo "$2....Success"
+     echo -e "$2....$G Success $N"
      fi
 }
 
