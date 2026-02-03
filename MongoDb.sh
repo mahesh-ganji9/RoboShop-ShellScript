@@ -5,23 +5,25 @@
 Userid=$(id -u)
 LOG_FOLDER=/var/log/ShellScript
 LOG_FILE=/var/log/ShellScript/$0.log
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+B="\e[34m"
 
 mkdir -p $LOG_FOLDER
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" 
+   echo -e "$Y please run the script with root access: $0" | tee -a $LOG_FILE
    exit 1
 fi
-
-
 
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$2....Failure"
+     echo "$R $2....Failure"
     else
-     echo "$2....Success"
+     echo "$G $2....Success"
      fi
 }
 

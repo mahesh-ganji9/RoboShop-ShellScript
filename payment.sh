@@ -29,7 +29,7 @@ VALIDATE() {
 dnf install python3 gcc python3-devel -y &>>$LOG_FILE
 VALIDATE $? "Installing python3 is"
 
-id roboshop &>>LOG_FILE
+id roboshop &>>$LOG_FILE
 if [ $? -eq 0 ]; then
    echo "user roboshop already exists"
    
@@ -53,7 +53,7 @@ rm -rf /app/*
 unzip /tmp/payment.zip &>>$LOG_FILE
 VALIDATE $? "unzip payment is"
 
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt $>>$LOG_FILE
 VALIDATE $? "install dependencies and libraries"
 
 cp $DIR/payment.service /etc/systemd/system/ &>>$LOG_FILE
