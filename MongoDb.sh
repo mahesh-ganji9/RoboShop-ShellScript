@@ -10,13 +10,15 @@ G="\e[32m"
 Y="\e[33m"
 B="\e[34m"
 
-mkdir -p $LOG_FOLDER
+
 
 if [ $Userid -ne 0 ]; then
  
    echo -e "$Y please run the script with root access: $0" | tee -a $LOG_FILE
    exit 1
 fi
+
+mkdir -p $LOG_FOLDER
 
 VALIDATE() {
     if [ $? -ne 0 ]; then
