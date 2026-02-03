@@ -22,9 +22,9 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$R $2....Failure"
+     echo -e "$R $2....Failure"
     else
-     echo "$G $2....Success"
+     echo -e "$G $2....Success"
      fi
 }
 
