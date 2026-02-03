@@ -24,7 +24,7 @@ VALIDATE() {
      
      echo -e" $R $2....Failure"
     else
-     echo -r "$G $2....Success"
+     echo -e "$G $2....Success"
      fi
 }
 
@@ -85,11 +85,11 @@ VALIDATE $? "mongo installation is"
 INDEX=$(mongosh --host $MONGO_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGO_HOST </app/db/master-data.js 
+    mongosh --host $MONGO_HOST </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "mongodb copy process"
   else
     echo -e "$Y Mongodb products already loaded"
   fi
 
-systemctl restart Catalogue
+systemctl restart Catalogue &>>$LOG_FILE
 VALIDATE $? "Restart Catalogue service is"
