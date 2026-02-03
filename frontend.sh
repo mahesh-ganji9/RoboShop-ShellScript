@@ -12,7 +12,7 @@ N="\e[0m"
 
 if [ $Userid -ne 0 ]; then
  
-   echo "please run the script with root access: $0" 
+   echo -e "$Y please run the script with root access: $0" 
    exit 1
 fi
 
