@@ -22,9 +22,9 @@ mkdir -p $LOG_FOLDER
 VALIDATE() {
     if [ $? -ne 0 ]; then
      
-     echo "$2....$R Failure $N"
+     echo -e "$2....$R Failure $N"
     else
-     echo "$2....$G Success $N"
+     echo -e "$2....$G Success $N"
      fi
 }
 
@@ -39,7 +39,7 @@ VALIDATE $? "Nodejs Installation Verison is"
 
 id roboshop &>>LOG_FILE
 if [ $? -eq 0 ]; then
-   echo "user roboshop already exists"
+   echo -e "$Y user roboshop already exists"
    
 else
    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
